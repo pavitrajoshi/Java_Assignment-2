@@ -1,0 +1,114 @@
+package application;
+//Demonstrate Menus
+import javafx.application.*;
+import javafx.scene.*;
+import javafx.stage.*;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCombination;
+import javafx.event.*;
+
+public class tw2 extends Application {
+	Label response;
+	public static void main(String[] args) {
+		// Start the JavaFX application by calling launch().
+		launch(args);
+	}
+
+	// Override the start() method.
+	public void start(Stage myStage) {
+
+		// Give the stage a title.
+		myStage.setTitle("Menu");
+
+		// Use a BorderPane for the root node.
+		BorderPane rootNode = new BorderPane();
+
+		// Create a scene.
+		Scene myScene = new Scene(rootNode, 300, 300);
+
+		// Set the scene on the stage.
+		myStage.setScene(myScene);
+
+		// Create a label that will report the selection.
+		response = new Label("Menu");
+
+		// Create the menu bar.
+		MenuBar mb = new MenuBar();
+
+		// Create the File menu.
+		Menu fileMenu = new Menu("_File");
+		// Create menu items for File menu
+		MenuItem New = new MenuItem("New");
+		MenuItem open = new MenuItem("Open");
+		MenuItem save = new MenuItem("Save");
+		MenuItem exit = new MenuItem("Exit");
+		fileMenu.getItems().addAll(New, open, save, new SeparatorMenuItem(),exit);
+
+		// Turn on mnemonic
+		fileMenu.setMnemonicParsing(true);
+						
+		// Add keyboard accelerators for the File menu.
+		New.setAccelerator(KeyCombination.keyCombination("shortcut+N"));
+		open.setAccelerator(KeyCombination.keyCombination("shortcut+O"));
+		save.setAccelerator(KeyCombination.keyCombination("shortcut+S"));
+		exit.setAccelerator(KeyCombination.keyCombination("shortcut+E"));
+
+		// Add File menu to the menu bar.
+		mb.getMenus().add(fileMenu);
+
+		// Create the Edit menu.
+		Menu EditMenu = new Menu("_Edit");
+
+		// Create the  sub-menu.
+		MenuItem cut = new MenuItem("Cut");
+		MenuItem copy = new MenuItem("Copy");
+		MenuItem paste = new MenuItem("Paste");
+		EditMenu.getItems().addAll(cut, copy, paste,new SeparatorMenuItem());
+		EditMenu.setMnemonicParsing(true);
+		cut.setAccelerator(KeyCombination.keyCombination("shortcut+X"));
+		copy.setAccelerator(KeyCombination.keyCombination("shortcut+C"));
+		
+paste.setAccelerator(KeyCombination.keyCombination("shortcut+V"));	
+
+		// Add Edit menu to the menu bar.
+		mb.getMenus().add(EditMenu);
+
+		// Create the Help menu.
+		Menu helpMenu = new Menu("Help");
+		MenuItem helpcenter = new MenuItem("Help Center");
+		MenuItem about = new MenuItem("About Us");
+		helpMenu.getItems().addAll(helpcenter,about);
+
+// Add Help menu to the menu bar.
+		mb.getMenus().add(helpMenu);
+
+		// Create one event handler that will handle menu action events.
+		EventHandler<ActionEvent> MEHandler = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent ae) {
+				String name = ((MenuItem) ae.getTarget()).getText();
+				// If Exit is chosen, the program is terminated.
+				if (name.equals("Exit"))
+					Platform.exit();
+				response.setText(name + " selected");
+			}
+		};
+		// Set action event handlers for the menu items.
+		New.setOnAction(MEHandler);
+		open.setOnAction(MEHandler);
+		save.setOnAction(MEHandler);
+		cut.setOnAction(MEHandler);
+		copy.setOnAction(MEHandler);
+		paste.setOnAction(MEHandler);
+		helpcenter.setOnAction(MEHandler);
+		about.setOnAction(MEHandler);
+		
+		// Add the menu bar to the top of the border pane and
+		// the response label to the center position.
+		rootNode.setTop(mb);
+		rootNode.setCenter(response);
+
+		// Show the stage and its scene.
+		myStage.show();
+	}
+}
