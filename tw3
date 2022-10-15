@@ -1,0 +1,112 @@
+package application;
+//Demonstrate Menus
+import javafx.application.*;
+import javafx.scene.*;
+import javafx.stage.*;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
+import javafx.event.*;
+import javafx.geometry.Pos;
+
+public class tw3 extends Application {
+	Label response;
+	public static void main(String[] args) {
+		// Start the JavaFX application by calling launch().
+		launch(args);
+	}
+	// Override the start() method.
+	public void start(Stage myStage) {
+		
+		// Give the stage a title.
+		myStage.setTitle("Context Menu");
+		
+		// Use a BorderPane for the root node.
+		BorderPane rootNode = new BorderPane();
+		
+		// Create a scene.
+		Scene myScene = new Scene(rootNode, 300, 300);
+		
+		// Set the scene on the stage.
+		myStage.setScene(myScene);
+		
+		// Create a label that will report the selection.
+		response = new Label("Menu");
+		MenuBar mb = new MenuBar();
+
+		Menu fileMenu = new Menu("File");
+		
+		// Create menu items for File menu
+		MenuItem New = new MenuItem("New");
+		MenuItem open = new MenuItem("Open");
+		MenuItem save = new MenuItem("Save");
+		MenuItem exit = new MenuItem("Exit");
+		fileMenu.getItems().addAll(New, open, save, new SeparatorMenuItem(),exit);
+		mb.getMenus().add(fileMenu);
+		
+		// Create menu items for Edit menu
+		Menu EditMenu = new Menu("Edit");
+		MenuItem cut = new MenuItem("Cut");
+		MenuItem copy = new MenuItem("Copy");
+		MenuItem paste = new MenuItem("Paste");
+		EditMenu.getItems().addAll(cut, copy, paste,new SeparatorMenuItem());
+		mb.getMenus().add(EditMenu);
+		
+		// Create the context menu items
+		Menu New1 = new Menu("New");
+		
+		MenuItem file = new MenuItem("File");
+		MenuItem open1 = new MenuItem("Open");
+		MenuItem image = new MenuItem("Image");
+		New1.getItems().addAll(file, open1, image);
+		
+		Menu view = new Menu("View");
+		MenuItem large = new MenuItem("Large");
+		MenuItem medium = new MenuItem("Medium");
+		
+MenuItem small = new MenuItem("Small");
+		view.getItems().addAll(large, medium, small);
+		
+		// Create a context (i.e., popup) menu that shows edit options.
+		final ContextMenu editMenu = new ContextMenu(New1,view);
+		
+		// Create one event handler that will handle menu action events.
+		EventHandler<ActionEvent> MEHandler = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent ae) {
+				String name = ((MenuItem) ae.getTarget()).getText();
+				// If Exit is chosen, the program is terminated.
+				if (name.equals("Exit"))
+					Platform.exit();
+				response.setText(name + " selected");
+			}
+		};
+		
+		// Set action event handlers for the menu items.
+		New.setOnAction(MEHandler);
+		view.setOnAction(MEHandler);
+		
+		// Create a text field and set its column width to 20.
+		TextField tf = new TextField();
+		tf.setPrefColumnCount(20);
+		
+		// Add the context menu to the textfield.
+		tf.setContextMenu(editMenu);
+		
+		
+// Add the menu bar to the top of the border pane and
+		// the response label to the center position.
+		rootNode.setTop(mb);
+		
+		// Create a flow pane that will hold both the response
+		// label and the text field.
+		FlowPane fpRoot = new FlowPane(10, 10);
+		
+		// Center the controls in the scene.
+		fpRoot.setAlignment(Pos.CENTER);
+		// Add both the label and the text field to the flow pane.
+		fpRoot.getChildren().addAll(response, tf);
+		// Add the flow pane to the center of the border layout.
+		rootNode.setCenter(fpRoot);
+		// Show the stage and its scene.
+		myStage.show();
+	}
+}
