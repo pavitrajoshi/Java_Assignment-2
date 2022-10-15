@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class tw44 extends Application {
+public class tw1 extends Application {
 String username="pavitrajoshi";
 String password="pavitra123";
 String checkUser,checkPass;
