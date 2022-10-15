@@ -1,0 +1,69 @@
+package application;
+import javafx.application.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+public class tw44 extends Application {
+String username="pavitrajoshi";
+String password="pavitra123";
+String checkUser,checkPass;
+public static void main(String[] args) {
+// TODO Auto-generated method stub
+launch(args);
+}
+public void start(Stage myStage) throws Exception {
+myStage.setTitle("Login Page");
+GridPane gp=new GridPane();
+GridPane gp1=new GridPane();
+
+gp.setAlignment(Pos.CENTER);
+gp1.setAlignment(Pos.CENTER);
+gp.setHgap(10);
+gp.setVgap(10);
+gp.setPadding(new Insets(20,20,20,20));
+
+Scene scene1=new Scene(gp,500,400);
+Scene scene2=new Scene(gp1,500,400);
+
+Text login=new Text("Login Page");
+Label un=new Label("User Name :");
+Label pas=new Label("Password :");
+Button submit=new Button("SUBMIT");
+TextField tf1=new TextField();
+PasswordField p=new PasswordField();
+Label suc=new Label("WELCOME");
+Label fai=new Label();
+gp.add(login,1,0);
+gp.add(un,0,1);
+gp.add(tf1,2,1);
+gp.add(pas,0,2);
+gp.add(p,2,2);
+gp.add(submit,1,3);
+submit.setOnAction(new EventHandler<ActionEvent>() {
+public void handle(ActionEvent e) {
+checkUser=tf1.getText().toString();
+checkPass=p.getText().toString();
+if(checkUser.equals(username)&&checkPass.equals(password)) {
+myStage.setScene(scene2);
+gp1.getChildren().addAll(suc);
+}
+else {
+gp.add(fai, 1, 5);
+fai.setText("Invalid Username or Password");
+}
+}
+});
+myStage.setScene(scene1);
+myStage.show();
+}
+}
